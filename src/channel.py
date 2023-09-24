@@ -8,7 +8,9 @@ from googleapiclient.discovery import build
 class Channel:
     """Класс для ютуб-канала"""
 
-    api_key:str = os.getenv('YT_API_KEY')
+    # api_key:str = os.getenv('YT_API_KEY')
+    api_key = 'AIzaSyAt8mAr2lJQ163Dn4 - TdTJONAprKrjwV7s'
+
 
 
     youtube = build('youtube', 'v3', developerKey=api_key)
