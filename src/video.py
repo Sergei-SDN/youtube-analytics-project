@@ -4,18 +4,17 @@ import os
 from googleapiclient import discovery
 
 
-API_KEY = os.getenv("YT_API_KEY")
-
-api_service_name = "youtube"
-api_version = "v3"
-
-youtube = discovery.build(api_service_name, api_version, developerKey=API_KEY)
-
-url_main_video = 'https://youtu.be/'
-
-
 class Video:
     """Класс для видео из ютуба"""
+
+    API_KEY = os.getenv("YT_API_KEY")
+
+    api_service_name = "youtube"
+    api_version = "v3"
+
+    youtube = discovery.build(api_service_name, api_version, developerKey=API_KEY)
+
+    url_main_video = 'https://youtu.be/'
 
     def __init__(self, video_id: str):
         """Экземпляр инициализируется id видео"""
