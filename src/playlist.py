@@ -2,14 +2,11 @@ import datetime
 import os
 import isodate
 from googleapiclient.discovery import build
+from src.channel import Mixin
 
 
-class PlayList:
+class PlayList(Mixin):
     """Класс для плейлиста из ютуба"""
-
-    api_key = os.getenv("YT_API_KEY")
-
-    youtube = build('youtube', 'v3', developerKey=api_key)
 
     url_main_video = 'https://youtu.be/'
 
@@ -21,7 +18,7 @@ class PlayList:
     def get_playlist_info(self):
         """Получает данные плейлиста по его id"""
 
-        playlist_videos = self.youtube.playlistItems().list(playlistId=self.id_playlist,
+        playlist_videos = self.get_service().playlistItems().list(playlistId=self.id_playlist,
                                                        part='contentDetails,snippet',
                                                        maxResults=50,
                                                        ).execute()
@@ -32,7 +29,7 @@ class PlayList:
 
         channel_id = self.get_playlist_info()["items"][0]["snippet"]["channelId"]
 
-        playlists = self.youtube.playlists().list(channelId=channel_id, part='snippet',
+        playlists = self.get_service().playlists().list(channelId=channel_id, part='snippet',
                                                         maxResults=50).execute()
 
         for playlist in playlists["items"]:
@@ -51,7 +48,7 @@ class PlayList:
         video_ids: list[str] = [video['contentDetails']['videoId'] for video in
                                 self.get_playlist_info()['items']]
 
-        video_response = self.youtube.videos().list(part='contentDetails,statistics',
+        video_response = self.get_service().videos().list(part='contentDetails,statistics',
                                                id=','.join(video_ids)
                                                ).execute()
         return video_response
