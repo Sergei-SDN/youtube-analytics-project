@@ -9,8 +9,8 @@ class Mixin:
     @classmethod
     def get_service(cls):
         """Получение информации о сервисе"""
-        api_key: str = os.getenv("YOUTUBE_APY_KEY")
-        # api_key = 'AIzaSyAt8mAr2lJQ163Dn4 - TdTJONAprKrjwV7s'
+        # api_key: str = os.getenv("YOUTUBE_APY_KEY")
+        api_key = 'AIzaSyAt8mAr2lJQ163Dn4 - TdTJONAprKrjwV7s'
         youtube = build("youtube", "v3", developerKey=api_key)
         return youtube
 

@@ -13,10 +13,22 @@ class Video(Mixin):
     def __init__(self, video_id: str):
         """Экземпляр инициализируется id видео"""
         self.video_id: str = video_id
-        self.video_title: str = self.get_video_info()['items'][0]['snippet']['title']
-        self.video_url: str = self.url_main_video + video_id
-        self.view_count: int = self.to_int(self.get_video_info()['items'][0]['statistics']['viewCount'])
-        self.like_count: int = self.to_int(self.get_video_info()['items'][0]['statistics']['likeCount'])
+
+        try:
+            self.video_title: str = self.get_video_info()['items'][0]['snippet']['title']
+
+        except IndexError:
+            print(f"Неверно указан id видео")
+            self.video_title = None
+            self.video_url = None
+            self.view_count = None
+            self.like_count = None
+
+        else:
+            self.video_title: str = self.get_video_info()['items'][0]['snippet']['title']
+            self.video_url: str = self.url_main_video + video_id
+            self.view_count: int = self.to_int(self.get_video_info()['items'][0]['statistics']['viewCount'])
+            self.like_count: int = self.to_int(self.get_video_info()['items'][0]['statistics']['likeCount'])
 
     def __str__(self):
         return f'{self.video_title}'
